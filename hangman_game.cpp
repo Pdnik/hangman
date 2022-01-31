@@ -2,15 +2,17 @@
 #include <cstdlib>
 #include<ctime>
 #include <string>
+#include<cctype>
+#include<bits/stdc++.h>
 using namespace std;
 
 const int max_TRIES=5;
-int letterFill (char, string, string&);
+int Fill_letter (char, string, string&);
 
 int main ()
 {
  string name;
- char letter;
+ char letter,Letter;
  int num_of_wrong_guesses=0;
  string word;
  string words[] =
@@ -41,12 +43,12 @@ int main ()
  string unknown(word.length(),'*');
 
  // welcome..... the user
- cout << "\n\nWelcome to hangman...Guess a country Name";
+ cout << "\n\nWelcome to hangman...Guess a Country Name";
  cout << "\n\nEach letter is represented by a star.";
 
  
 
- cout << "\n\nYou have to type only one letter in one try";
+ cout << "\n\n type only one letter in one try";
 
  
 
@@ -59,16 +61,17 @@ int main ()
  cout << "\n\n" << unknown;
  cout << "\n\nGuess a letter: ";
  cin >> letter;
+ Letter=(char)tolower(letter);
  // Fill secret word with letter if the guess is correct,
  // otherwise increment the number of wrong guesses.
- if (letterFill(letter, word, unknown)==0)
+ if (Fill_letter(Letter, word, unknown)==0)
  {
  cout << endl << "Whoops! That letter isn't in there!" << endl;
  num_of_wrong_guesses++;
  }
  else
  {
- cout << endl << "You found a letter! Isn't that exciting!" << endl;
+ cout << endl << "You found a letter!  that's exciting!" << endl;
  }
  // Tell user how many guesses has left.
  cout << "You have " << max_TRIES - num_of_wrong_guesses;
@@ -98,22 +101,22 @@ int main ()
 
  Also, returns zero if the character is already guessed. */
 
-int letterFill (char guess, string secretword, string &guessword)
+int Fill_letter (char guess, string secretword, string &guessword)
 {
- int i;
- int matches=0;
+ int k;
+ int match=0;
  int len=secretword.length();
- for (i = 0; i< len; i++)
+ for (k = 0; k< len; k++)
  {
  // Did we already match this letter in a previous guess?
- if (guess == guessword[i])
+ if (guess == guessword[k])
  return 0;
  // Is the guess in the secret word?
- if (guess == secretword[i])
+ if (guess == secretword[k])
  {
- guessword[i] = guess;
- matches++;
+ guessword[k] = guess;
+ match++;
  }
  }
- return matches;
+ return match;
 }
